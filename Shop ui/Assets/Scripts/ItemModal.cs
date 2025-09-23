@@ -15,7 +15,6 @@ public class ItemModal : MonoBehaviour
     public Button closeButton; // CloseButton(닫기 버튼, X)
     public Button cancelButton; // CancelButton(취소/닫기 버튼)
     public Button confirmButton; // ConfirmButton(확인/구매 버튼)
-    public Image closeImage;   // CloseImage(닫기 이미지, X)
                                // 확인(Confirm) 시 외부로 전달할 콜백과 현재 아이템 데이터
     private System.Action<ItemData> onConfirm;  // Confirm 콜백(확인 시 호출)
     private ItemData current;                    // 현재 표시 중인 아이템 데이터
@@ -28,7 +27,6 @@ public class ItemModal : MonoBehaviour
         // 버튼 이벤트 연결
         if (closeButton != null) closeButton.onClick.AddListener(Close);
         if (cancelButton != null) cancelButton.onClick.AddListener(Close);
-        if (closeImage != null) closeImage.GetComponent<Button>().onClick.AddListener(Close);
 
         // Confirm(확인) 버튼은 별도 메서드 사용
         if (confirmButton != null) confirmButton.onClick.AddListener(ClickConfirm);
