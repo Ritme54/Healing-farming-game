@@ -5,6 +5,7 @@ using TMPro;
 
 public class Pagenation : MonoBehaviour
 {
+    [SerializeField] private ItemModal itemModal; // 상세/수량 팝업 연결용
     [Header("UI References")] public Transform gridParent; // ShopGrid 또는 BagGrid
     public GameObject cardPrefab; // ItemCard 프리팹
     public TMP_Text pageText; // "1 / N"
@@ -75,6 +76,18 @@ public class Pagenation : MonoBehaviour
             {
                 // TODO: 상세 패널/수량 팝업 열기
                 Debug.Log($"카드 클릭: {item.name} / {item.price}");
+                if (itemModal != null)
+                {
+                    itemModal.Show(item, (confirmed) =>
+                    {
+                        Debug.Log($"모달 확인 클릭: {confirmed.name} / {confirmed.price}");
+                        // 다음 단계: Quantity Popup(수량 팝업)으로 연결
+                    });
+                }
+                else
+                {
+                    Debug.LogWarning("itemModal 참조가 비었습니다. 인스펙터에서 연결해 주세요.");
+                }
             };
 
             if (view != null) view.SetData(allItems[i], onClick);
