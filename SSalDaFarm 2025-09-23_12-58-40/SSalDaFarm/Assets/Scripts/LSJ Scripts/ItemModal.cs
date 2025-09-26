@@ -19,6 +19,18 @@ public class ItemModal : MonoBehaviour
     // 확인(Confirm) 시 외부로 전달할 콜백과 현재 아이템 데이터
     private System.Action<ItemData> onConfirm;  // Confirm 콜백(확인 시 호출)
     private ItemData current;                    // 현재 표시 중인 아이템 데이터
+    public TMP_InputField qtyInput;
+    public Button minusButton;
+    public Button plusButton;
+    public TMP_Text rangeHint;
+    public TMP_Text totalText;
+    public TMP_Text walletText;
+
+    private int minQty = 1;
+    private int maxQty = 99;
+    private int currentQty = 1;
+    private ItemSource currentSource = ItemSource.Shop; // “구매/판매” 분기용
+
 
     void Awake()
     {
@@ -120,6 +132,93 @@ public class ItemModal : MonoBehaviour
 
     }
 
+    public void ConfigureQuantity(ItemSource source, int min, int max, int initial = 1, int playerCoins = 0, int ownedCount = 0)
+    {
+        currentSource = source; minQty = Mathf.Max(1, min); maxQty = Mathf.Max(minQty, max); currentQty = Mathf.Clamp(initial, minQty, maxQty);
+        // 입력 필드 표시
+        if (qtyInput != null)
+        {
+            qtyInput.contentType = TMP_InputField.ContentType.IntegerNumber;
+            qtyInput.text = currentQty.ToString();
+            qtyInput.onValueChanged.RemoveAllListeners();
+            qtyInput.onValueChanged.AddListener(OnQtyChangedByInput);
+            qtyInput.onEndEdit.RemoveAllListeners();
+            qtyInput.onEndEdit.AddListener(OnQtyEndEdit);
+        }
+
+        // 증감 버튼(있으면) 연결
+        if (minusButton != null)
+        {
+            minusButton.onClick.RemoveAllListeners();
+            minusButton.onClick.AddListener(() => SetQty(currentQty - 1));
+        }
+        if (plusButton != null)
+        {
+            plusButton.onClick.RemoveAllListeners();
+            plusButton.onClick.AddListener(() => SetQty(currentQty + 1));
+        }
+
+        // 범위 힌트
+        if (rangeHint != null)
+            rangeHint.text = $"최소 {minQty} ~ 최대 {maxQty}";
+
+        // 지갑/보유 안내
+        if (walletText != null)
+        {
+            if (source == ItemSource.Shop)
+                walletText.text = $"보유 코인 {playerCoins:N0}";
+            else
+                walletText.text = $"보유 {ownedCount:N0}개";
+        }
+
+        UpdateTotal(); // 합계 갱신
+
+
+    }
+
+    private void OnQtyChangedByInput(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return;
+        int parsed;
+        if (!int.TryParse(text, out parsed))
+            return;
+
+        SetQty(parsed, updateInput: false); // 입력 콜백 루프 방지
+
+
+    }
+
+    private void OnQtyEndEdit(string text)
+    { // 포커스가 빠질 때 범위 보정
+        int parsed = currentQty;
+        int.TryParse(text, out parsed);
+        SetQty(parsed);
+    }
+
+    private void SetQty(int value, bool updateInput = true)
+    {
+        int clamped = Mathf.Clamp(value, minQty, maxQty);
+        currentQty = clamped;
+
+        if (updateInput && qtyInput != null)
+            qtyInput.text = currentQty.ToString();
+
+        UpdateTotal();
+
+
+    }
+
+
+    private void UpdateTotal()
+    {
+        if (totalText != null && priceText != null && current != null) { long total = (long)current.price * currentQty; totalText.text = $"합계 {total:N0} 코인"; }
+
+
+        // 확인 버튼 활성화 조건(필요 시)
+        if (confirmButton != null)
+            confirmButton.interactable = (currentQty >= minQty && currentQty <= maxQty);
+    }
+
+    public int GetSelectedQuantity() => currentQty;
+
 }
-
-

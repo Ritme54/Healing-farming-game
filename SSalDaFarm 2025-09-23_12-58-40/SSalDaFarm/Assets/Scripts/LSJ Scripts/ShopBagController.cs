@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ItemSource
-{
-    Shop, // 상점
-    Bag // 가방
-}
-
 public class ShopBagController : MonoBehaviour
 {
     [Header("Data (데이터)")][Tooltip("상점에 표시할 아이템 목록")] public List<ItemData> shopItems = new List<ItemData>();
@@ -39,6 +33,8 @@ public class ShopBagController : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log($"[SBC] Before Init -> shop:{shopItems?.Count}, bag:{bagItems?.Count}");
+
         // 필수 참조 점검(빠른 진단용)
         if (shopGrid == null) Debug.LogWarning("ShopBagController: shopGrid 참조가 비었습니다.");
         if (bagGrid == null) Debug.LogWarning("ShopBagController: bagGrid 참조가 비었습니다.");
@@ -46,8 +42,13 @@ public class ShopBagController : MonoBehaviour
         if (itemModal == null) Debug.LogWarning("ShopBagController: itemModal 참조가 비었습니다.");
 
         // 데모용 더미 데이터 (필요 시 사용)
-        // if (shopItems.Count == 0) shopItems = CreateDummy(20);
-        // if (bagItems.Count  == 0) bagItems  = CreateDummy(8);
+         if (shopItems.Count == 0) shopItems = CreateDummy(20);
+           Debug.Log($"[SBC] shopItems dummy -> {shopItems.Count}");
+
+         if (bagItems.Count  == 0) bagItems  = CreateDummy(8);
+        Debug.Log($"[SBC] bagItems dummy -> {bagItems.Count}");
+
+
 
         RefreshAll();
     }
@@ -105,29 +106,53 @@ public class ShopBagController : MonoBehaviour
 
     private void ShowModal(ItemData item, ItemSource source)
     {
-        if (itemModal == null)
         {
-            Debug.LogWarning("ItemModal 참조가 비어 있습니다. 인스펙터에서 연결해 주세요.");
-            return;
+            if (itemModal == null || item == null) return;
+
+
+
+            // 라벨 분기
+            itemModal.SetConfirmLabel(source == ItemSource.Shop ? "구매" : "판매");
+
+            // 최대값 계산 예시
+            int min = 1;
+            int max;
+            if (source == ItemSource.Shop)
+            {
+                // 단가 0 방어
+                int unit = Mathf.Max(1, item.price);
+                // 보유 코인으로 살 수 있는 최대 수량
+                max = Mathf.Max(1, playerCoins / unit);
+                // 상점 재고가 있다면: max = Mathf.Min(max, item.shopStock);
+            }
+            else
+            {
+                // 가방 보유 수량
+                int owned = GetOwnedCount(item); // 아래 임시 구현 참고
+                max = Mathf.Max(1, owned);
+            }
+
+            // 모달 표시
+            itemModal.Show(item, (confirmedItem) =>
+            {
+                int qty = itemModal.GetSelectedQuantity(); // 모달에서 선택된 수량 읽기
+                Debug.Log($"확인: {confirmedItem.name}, 수량 {qty}, {(source == ItemSource.Shop ? "구매" : "판매")}");
+
+                // 다음 단계에서 Purchase/Sell 구현 후 아래 호출 예정
+                // if (source == ItemSource.Shop) Purchase(confirmedItem, qty);
+                // else Sell(confirmedItem, qty);
+                // RefreshAll();
+            });
+
+            // 4) 모달에 수량 섹션 세팅(표시 직후)
+            int initial = 1;
+            int ownedCountForDisplay = (source == ItemSource.Bag) ? GetOwnedCount(item) : 0;
+            itemModal.ConfigureQuantity(source, min, max, initial, playerCoins, ownedCountForDisplay);
         }
-        if (item == null)
-        {
-            Debug.LogWarning("ShowModal: item이 null입니다.");
-            return;
-        }
-
-        // 모달의 확인 버튼 라벨을 출처에 따라 변경(구매/판매)
-        itemModal.SetConfirmLabel(source == ItemSource.Shop ? "구매" : "판매");
-
-        // 모달 표시 및 확인 콜백 연결
-        itemModal.Show(item, (confirmedItem) =>
-        {
-            if (confirmedItem == null) return;
-
-            Debug.Log($"모달 확인: {confirmedItem.name} ({(source == ItemSource.Shop ? "구매" : "판매")})");
-            // TODO: 다음 단계에서 QuantityPopup.Show(...) 연결
-        });
     }
+    private int GetOwnedCount(ItemData item)
+    { // bagItems 내 동일 아이템 수량 합산 로직이 있다면 여기에 구현 // 현재는 스택 미구현 가정으로 1 반환
+      return 1; }
 
     private void ClearChildren(Transform parent)
     {
