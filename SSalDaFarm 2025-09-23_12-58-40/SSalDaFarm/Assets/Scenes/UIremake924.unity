@@ -3102,8 +3102,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 190, y: 190}
-  m_Spacing: {x: 30, y: 30}
+  m_CellSize: {x: 180, y: 180}
+  m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 4
 --- !u!114 &633738960
@@ -5327,8 +5327,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 190, y: 190}
-  m_Spacing: {x: 30, y: 30}
+  m_CellSize: {x: 180, y: 180}
+  m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 4
 --- !u!114 &1259475384
@@ -6497,6 +6497,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1548553107}
+  - component: {fileID: 1548553108}
   m_Layer: 0
   m_Name: ShopBagController
   m_TagString: Untagged
@@ -6519,6 +6520,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1548553108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548553106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4373d3ceb466cd44b885e1e40f423c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopItems: []
+  bagItems: []
+  shopGrid: {fileID: 633738958}
+  bagGrid: {fileID: 1259475382}
+  cardPrefab: {fileID: 8797281114474965916, guid: 0be22b786548a864eb3205387800e0bd, type: 3}
+  itemModal: {fileID: 924498665}
+  playerCoins: 10000
 --- !u!1 &1557895790
 GameObject:
   m_ObjectHideFlags: 0

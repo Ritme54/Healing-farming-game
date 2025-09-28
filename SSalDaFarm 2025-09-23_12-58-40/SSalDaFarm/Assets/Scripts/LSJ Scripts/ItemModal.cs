@@ -208,6 +208,15 @@ public class ItemModal : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        // 데모용: ESC 키로 닫기
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Close();
+        }
+    }
+
 
     private void UpdateTotal()
     {

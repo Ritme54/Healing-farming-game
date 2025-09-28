@@ -8,6 +8,7 @@ using UnityEngine;
 namespace Assets.Scripts
 {
     [System.Serializable]
+
     public class ItemData
     {
         public string name; 
