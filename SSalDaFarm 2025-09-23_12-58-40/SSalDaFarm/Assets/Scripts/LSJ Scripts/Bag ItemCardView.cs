@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI; 
 using TMPro;
+using Assets.Scripts;
 
-public class ItemCardView : MonoBehaviour
+public class BagItemCardView : MonoBehaviour
 {
     public Image iconImage;
     public TMP_Text nameText; 
@@ -13,7 +14,7 @@ public class ItemCardView : MonoBehaviour
 
     public void SetData(ItemData d, System.Action<ItemData> onClickHandler)
     {
-        Debug.Log($"[ItemCardView] Bind -> name:{d?.name}, price:{d?.price}, icon:{(d?.icon ? d.icon.name : "null")}"); data = d; onClick = onClickHandler;
+        Debug.Log($"[BagItemCardView] Bind -> name:{d?.name}, price:{d?.price}, icon:{(d?.icon ? d.icon.name : "null")}"); data = d; onClick = onClickHandler;
 
 
         if (iconImage) iconImage.sprite = d.icon;

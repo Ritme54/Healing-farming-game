@@ -1776,7 +1776,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1178147096}
-  - {fileID: 1375885415}
   - {fileID: 941690820}
   - {fileID: 1514790086}
   - {fileID: 331378141}
@@ -1800,7 +1799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 521
+    m_Left: 244
     m_Right: 0
     m_Top: 11
     m_Bottom: 0
@@ -2233,7 +2232,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 940}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &428384263
 MonoBehaviour:
@@ -2290,8 +2289,8 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: 1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!1 &519420028
 GameObject:
@@ -3101,11 +3100,11 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 180, y: 180}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
-  m_ConstraintCount: 4
+  m_ConstraintCount: 1
 --- !u!114 &633738960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3157,46 +3156,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemModal: {fileID: 924498665}
+  isShop: 1
+  shopCardPrefab: {fileID: 8797281114474965916, guid: 0b482490676e222449be4e35236f613d, type: 3}
+  bagCardPrefab: {fileID: 8797281114474965916, guid: 0be22b786548a864eb3205387800e0bd, type: 3}
   gridParent: {fileID: 633738958}
-  cardPrefab: {fileID: 8797281114474965916, guid: 0be22b786548a864eb3205387800e0bd, type: 3}
+  cardPrefab: {fileID: 8797281114474965916, guid: 0b482490676e222449be4e35236f613d, type: 3}
   pageText: {fileID: 1112674759}
   prevButton: {fileID: 1011826501}
   nextButton: {fileID: 1463227794}
-  rows: 4
-  cols: 2
+  rows: 1
+  cols: 5
   allItems:
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
-  - name: 
     description: 
-    price: 0
-    icon: {fileID: 0}
-  - name: 
-    description: 
-    price: 0
-    icon: {fileID: 0}
-  - name: 
-    description: 
-    price: 0
-    icon: {fileID: 0}
+    id: 
 --- !u!1 &642811730
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,7 +3603,7 @@ GameObject:
   m_Component:
   - component: {fileID: 796415241}
   - component: {fileID: 796415243}
-  - component: {fileID: 796415242}
+  - component: {fileID: 796415244}
   m_Layer: 5
   m_Name: CenterArea
   m_TagString: Untagged
@@ -3637,32 +3632,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &796415242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 796415240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &796415243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3680,9 +3649,35 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: 3
+  m_FlexibleWidth: 4
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &796415244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796415240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 1
+  m_ReverseArrangement: 0
 --- !u!1 &814616507
 GameObject:
   m_ObjectHideFlags: 0
@@ -4446,7 +4441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 523
+    m_Left: 218
     m_Right: 16
     m_Top: 0
     m_Bottom: 0
@@ -5326,11 +5321,11 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 180, y: 180}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
-  m_ConstraintCount: 4
+  m_ConstraintCount: 2
 --- !u!114 &1259475384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5382,6 +5377,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemModal: {fileID: 924498665}
+  isShop: 0
+  shopCardPrefab: {fileID: 8797281114474965916, guid: 0b482490676e222449be4e35236f613d, type: 3}
+  bagCardPrefab: {fileID: 8797281114474965916, guid: 0be22b786548a864eb3205387800e0bd, type: 3}
   gridParent: {fileID: 1259475382}
   cardPrefab: {fileID: 8797281114474965916, guid: 0be22b786548a864eb3205387800e0bd, type: 3}
   pageText: {fileID: 1208240554}
@@ -5391,37 +5389,45 @@ MonoBehaviour:
   cols: 2
   allItems:
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
   - name: 
-    description: 
     price: 0
     icon: {fileID: 0}
+    description: 
+    id: 
 --- !u!1 &1269224629
 GameObject:
   m_ObjectHideFlags: 0
@@ -5661,62 +5667,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290619176}
   m_CullTransparentMesh: 1
---- !u!1 &1375885414
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1375885415}
-  - component: {fileID: 1375885416}
-  m_Layer: 5
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1375885415
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1375885414}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 389772129}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1375885416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1375885414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: 1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &1396390689
 GameObject:
   m_ObjectHideFlags: 0
@@ -7891,7 +7841,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 940}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1772804333
 MonoBehaviour:
@@ -7948,8 +7898,8 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: 1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!1 &1824642029
 GameObject:
@@ -8257,8 +8207,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 70
+    m_Bottom: 70
   m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1

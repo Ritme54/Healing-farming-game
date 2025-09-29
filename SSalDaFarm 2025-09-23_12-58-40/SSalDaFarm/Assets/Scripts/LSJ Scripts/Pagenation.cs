@@ -2,17 +2,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Assets.Scripts;
 
 public class Pagenation : MonoBehaviour
 {
     [SerializeField] private ItemModal itemModal; // 상세/수량 팝업 연결용
+    [SerializeField] private bool isShop; // 이 스크립트 인스턴스가 상점용인지 가방용인지 인스펙터에서 체크
+    [SerializeField] private GameObject shopCardPrefab;
+    [SerializeField] private GameObject bagCardPrefab;
     [Header("UI References")] public Transform gridParent; // ShopGrid 또는 BagGrid
     public GameObject cardPrefab; // ItemCard 프리팹
     public TMP_Text pageText; // "1 / N"
     public Button prevButton; public Button nextButton;
     [Header("Layout")]
-    public int rows = 4;
-    public int cols = 4;
+    public int rows = 1;
+    public int cols = 5;
 
     [Header("Data")]
     public List<ItemData> allItems = new List<ItemData>();
@@ -31,9 +35,6 @@ public class Pagenation : MonoBehaviour
 
     private void Start()
     {
-        // 데모용 더미 데이터가 필요하면 여기서 채워도 됩니다.
-        // if (allItems.Count == 0) allItems = CreateDummy(40);
-
         RecalculatePages();
         RefreshPage();
     }
@@ -55,46 +56,65 @@ public class Pagenation : MonoBehaviour
 
     private void RefreshPage()
     {
-        // 기존 카드 제거
-        for (int i = gridParent.childCount - 1; i >= 0; i--)
-        {
-            Destroy(gridParent.GetChild(i).gameObject);
-        }
 
-        // 현재 페이지 범위 계산
+        if (isShop) Debug.Log("\[Pagenation]isShop=TRUE,instantiate:shopCardPrefab?.name"); 
+        else
+            Debug.Log("[Pagenation] isShop=FALSE, instantiate: {bagCardPrefab?.name}");
+
+        // Clear
+        for (int i = gridParent.childCount - 1; i >= 0; i--)
+            Destroy(gridParent.GetChild(i).gameObject);
+
+        // Range
         int start = currentPage * itemsPerPage;
         int end = Mathf.Min(start + itemsPerPage, allItems.Count);
 
-        // 카드 생성/바인딩
         for (int i = start; i < end; i++)
         {
-            var go = Instantiate(cardPrefab, gridParent);
-            var view = go.GetComponent<ItemCardView>();
+            var prefab = isShop ? shopCardPrefab : bagCardPrefab;
+            if (prefab == null)
+            {
+                Debug.LogError("카드 프리팹이 비어 있습니다. 인스펙터에서 연결해 주세요.");
+                break;
+            }
 
-            // 클릭 시 상세/수량 팝업으로 연결할 콜백
+            var go = Instantiate(prefab, gridParent);
+
+            // 공통 클릭 콜백
             System.Action<ItemData> onClick = (item) =>
             {
-                // TODO: 상세 패널/수량 팝업 열기
-                Debug.Log($"카드 클릭: {item.name} / {item.price}");
                 if (itemModal != null)
                 {
                     itemModal.Show(item, (confirmed) =>
                     {
-                        Debug.Log($"모달 확인 클릭: {confirmed.name} / {confirmed.price}");
-                        // 다음 단계: Quantity Popup(수량 팝업)으로 연결
+                        // TODO: 수량 팝업 등 연결
+                        Debug.Log($"모달 확인: {confirmed.name} / {confirmed.price}");
                     });
-                }
-                else
-                {
-                    Debug.LogWarning("itemModal 참조가 비었습니다. 인스펙터에서 연결해 주세요.");
                 }
             };
 
-            if (view != null) view.SetData(allItems[i], onClick);
+            if (isShop)
+            {
+               var view = go.GetComponent<ShopItemCardView>();
+               if (view == null)
+               {
+                   Debug.LogWarning("ShopItemCardView 카드에 없습니다. 프리팹 구성을 확인해 주세요.");
+               }
+               else view.SetData(allItems[i], onClick);
+            }
+            else
+            {
+                // 가방은 기존 뷰를 사용한다고 가정
+                var view = go.GetComponent<BagItemCardView>();
+                if (view == null)
+                {
+                    Debug.LogWarning("BagItemCardView가 카드에 없습니다. 프리팹 구성을 확인해 주세요.");
+                }
+                else view.SetData(allItems[i], onClick);
+            }
         }
 
-        // 남은 칸을 비워도 되지만, 굳이 placeholder를 채울 필요는 없습니다.
-        // 페이지 표시/버튼 상태 갱신
+        // UI 상태
         if (pageText) pageText.text = $"{currentPage + 1} / {totalPages}";
         if (prevButton) prevButton.interactable = currentPage > 0;
         if (nextButton) nextButton.interactable = currentPage < totalPages - 1;
@@ -112,21 +132,5 @@ public class Pagenation : MonoBehaviour
         if (currentPage >= totalPages - 1) return;
         currentPage++;
         RefreshPage();
-    }
-
-    // 필요 시 테스트용 더미 데이터
-    private List<ItemData> CreateDummy(int count)
-    {
-        var list = new List<ItemData>();
-        for (int i = 0; i < count; i++)
-        {
-            list.Add(new ItemData
-            {
-                name = $"아이템 {i + 1}",
-                price = 100 + i * 25,
-                icon = null
-            });
-        }
-        return list;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro; // TextMeshPro 사용 시 유지
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts;
 
 public class StoreListBinder : MonoBehaviour
 {
@@ -112,4 +113,3 @@ public class StoreListBinder : MonoBehaviour
     }
 }
 
-[System.Serializable] public class ItemData { public string name; public string description; public int price; public Sprite icon; }

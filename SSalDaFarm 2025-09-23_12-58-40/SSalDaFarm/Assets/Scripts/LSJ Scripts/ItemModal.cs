@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI; // UI(사용자 인터페이스)
 using TMPro; // TextMeshPro(텍스트메시프로)
+using Assets.Scripts;
 
 public class ItemModal : MonoBehaviour
 {
