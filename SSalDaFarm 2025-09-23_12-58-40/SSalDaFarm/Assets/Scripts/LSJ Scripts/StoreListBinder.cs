@@ -87,12 +87,12 @@ public class StoreListBinder : MonoBehaviour
 
     private string FormatPrice(int price)
     {
-        return string.Format("{0:N0} 코인", price);
+        return string.Format("{0:N0} Coins", price);
     }
 
     private void OnClickBuy(ItemData data)
     {
-        Debug.Log($"구매 시도: {data.name} / {data.price} 코인");
+        Debug.Log($"구매 시도: {data.name} / {data.price} Coins");
         // TODO: 확인 팝업/재화 차감 등 실제 구매 로직 연결
     }
 

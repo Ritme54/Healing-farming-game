@@ -10,7 +10,7 @@ public class ShopItemCardView : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Image itemImage; // 썸네일
     [SerializeField] private TMP_Text nameText; // 이름
-    [SerializeField] private Image coinIcon; // 코인 아이콘
+    [SerializeField] private Image coinIcon; // Coins 아이콘
     [SerializeField] private TMP_Text priceText; // 가격
 
     [Header("Optional")]
@@ -37,7 +37,7 @@ public class ShopItemCardView : MonoBehaviour
         if (priceText != null)
             priceText.text = item != null ? item.price.ToString() : string.Empty;
 
-        // 코인 아이콘은 디자인상 고정 스프라이트일 수 있음(없다면 그대로 두기)
+        // Coins 아이콘은 디자인상 고정 스프라이트일 수 있음(없다면 그대로 두기)
         // coinIcon은 null이어도 무방
 
         // 버튼 연결

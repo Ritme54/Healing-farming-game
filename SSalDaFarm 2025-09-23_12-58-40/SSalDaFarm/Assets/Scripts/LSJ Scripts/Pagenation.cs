@@ -11,7 +11,6 @@ public class Pagenation : MonoBehaviour
     [SerializeField] private GameObject shopCardPrefab;
     [SerializeField] private GameObject bagCardPrefab;
     [Header("UI References")] public Transform gridParent; // ShopGrid ¶Ç´Â BagGrid
-    public GameObject cardPrefab; // ItemCard ÇÁ¸®ÆÕ
     public TMP_Text pageText; // "1 / N"
     public Button prevButton; public Button nextButton;
     [Header("Layout")]
@@ -57,7 +56,7 @@ public class Pagenation : MonoBehaviour
     private void RefreshPage()
     {
 
-        if (isShop) Debug.Log("\[Pagenation]isShop=TRUE,instantiate:shopCardPrefab?.name"); 
+        if (isShop) Debug.Log("[Pagenation]isShop=TRUE,instantiate:shopCardPrefab?.name"); 
         else
             Debug.Log("[Pagenation] isShop=FALSE, instantiate: {bagCardPrefab?.name}");
 

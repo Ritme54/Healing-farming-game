@@ -25,12 +25,12 @@ public class ItemModal : MonoBehaviour
     public Button plusButton;
     public TMP_Text rangeHint;
     public TMP_Text totalText;
-    public TMP_Text walletText;
+
 
     private int minQty = 1;
     private int maxQty = 99;
     private int currentQty = 1;
-    private ItemSource currentSource = ItemSource.Shop; // “구매/판매” 분기용
+   // private ItemSource currentSource = ItemSource.Shop; // “구매/판매” 분기용
 
 
     void Awake()
@@ -135,7 +135,9 @@ public class ItemModal : MonoBehaviour
 
     public void ConfigureQuantity(ItemSource source, int min, int max, int initial = 1, int playerCoins = 0, int ownedCount = 0)
     {
-        currentSource = source; minQty = Mathf.Max(1, min); maxQty = Mathf.Max(minQty, max); currentQty = Mathf.Clamp(initial, minQty, maxQty);
+       // currentSource = source; minQty = Mathf.Max(1, min); maxQty = Mathf.Max(minQty, max); currentQty = Mathf.Clamp(initial, minQty, maxQty);
+     
+
         // 입력 필드 표시
         if (qtyInput != null)
         {
@@ -161,21 +163,15 @@ public class ItemModal : MonoBehaviour
 
         // 범위 힌트
         if (rangeHint != null)
-            rangeHint.text = $"최소 {minQty} ~ 최대 {maxQty}";
+            rangeHint.text = $"Max {maxQty}";
 
-        // 지갑/보유 안내
-        if (walletText != null)
-        {
-            if (source == ItemSource.Shop)
-                walletText.text = $"보유 코인 {playerCoins:N0}";
-            else
-                walletText.text = $"보유 {ownedCount:N0}개";
-        }
 
-        UpdateTotal(); // 합계 갱신
+
+        UpdateTotal(); // Total 갱신
 
 
     }
+   
 
     private void OnQtyChangedByInput(string text)
     {
@@ -221,7 +217,7 @@ public class ItemModal : MonoBehaviour
 
     private void UpdateTotal()
     {
-        if (totalText != null && priceText != null && current != null) { long total = (long)current.price * currentQty; totalText.text = $"합계 {total:N0} 코인"; }
+        if (totalText != null && priceText != null && current != null) { long total = (long)current.price * currentQty; totalText.text = $"Total {total:N0} Coins"; }
 
 
         // 확인 버튼 활성화 조건(필요 시)
