@@ -701,6 +701,8 @@ GameObject:
   - component: {fileID: 8682620739868226378}
   - component: {fileID: 5261717662362949021}
   - component: {fileID: 843625011842983475}
+  - component: {fileID: 8172807395224506618}
+  - component: {fileID: 2850944384816658183}
   m_Layer: 5
   m_Name: BagCard
   m_TagString: Untagged
@@ -864,3 +866,57 @@ MonoBehaviour:
   nameText: {fileID: 8296644075064166608}
   priceText: {fileID: 4726767814977606194}
   rootButton: {fileID: 5261717662362949021}
+--- !u!114 &8172807395224506618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8797281114474965916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e182e9eaa498c2a46b4b15cce8b4f21f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlay: {fileID: 0}
+  window: {fileID: 0}
+  iconImage: {fileID: 0}
+  nameText: {fileID: 0}
+  priceText: {fileID: 0}
+  descText: {fileID: 0}
+  closeButton: {fileID: 0}
+  cancelButton: {fileID: 0}
+  confirmButton: {fileID: 0}
+  confirmLabel: {fileID: 0}
+  qtyInput: {fileID: 0}
+  minusButton: {fileID: 0}
+  plusButton: {fileID: 0}
+  rangeHint: {fileID: 0}
+  totalText: {fileID: 0}
+--- !u!114 &2850944384816658183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8797281114474965916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e182e9eaa498c2a46b4b15cce8b4f21f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlay: {fileID: 0}
+  window: {fileID: 0}
+  iconImage: {fileID: 0}
+  nameText: {fileID: 0}
+  priceText: {fileID: 0}
+  descText: {fileID: 0}
+  closeButton: {fileID: 0}
+  cancelButton: {fileID: 0}
+  confirmButton: {fileID: 0}
+  confirmLabel: {fileID: 0}
+  qtyInput: {fileID: 0}
+  minusButton: {fileID: 0}
+  plusButton: {fileID: 0}
+  rangeHint: {fileID: 0}
+  totalText: {fileID: 0}

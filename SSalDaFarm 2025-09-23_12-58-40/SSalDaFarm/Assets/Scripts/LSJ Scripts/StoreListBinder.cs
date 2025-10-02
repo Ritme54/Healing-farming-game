@@ -1,8 +1,8 @@
+using Assets.Scripts;
 using System.Collections.Generic;
 using TMPro; // TextMeshPro 사용 시 유지
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts;
 
 public class StoreListBinder : MonoBehaviour
 {
@@ -12,12 +12,12 @@ public class StoreListBinder : MonoBehaviour
     [Header("Sample Data")]
     public List<ItemData> items = new List<ItemData>();
 
+    public ItemListAsset storeItemList;
+
     private void Start()
     {
-        if (items.Count == 0)
-        {
-            items = CreateDummyItems(10);
-        }
+        if (items.Count == 0 && storeItemList != null) items = ListToRuntime(storeItemList);
+        if (items.Count == 0) items = CreateDummyItems(10);
         BindAll(items);
     }
 
@@ -111,5 +111,19 @@ public class StoreListBinder : MonoBehaviour
         }
         return list;
     }
+
+    private List<ItemData> ListToRuntime(ItemListAsset listAsset)
+    {
+        var list = new List<ItemData>();
+        if (listAsset == null || listAsset.entries == null) return list;
+        foreach (var e in listAsset.entries)
+        {
+            if (e == null || e.item == null) continue;
+            var r = e.item.ToRuntime();
+            if (e.overridePrice >= 0) r.price = e.overridePrice; list.Add(r);
+        }
+        return list;
+    }
+
 }
 

@@ -1,5 +1,4 @@
 using Assets.Scripts;
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -34,11 +33,14 @@ public class ShopBagController : MonoBehaviour
     [Tooltip("보유 Coins")]
     public int playerCoins = 10000;
 
+
+    public ItemListAsset shopItemList; // 상점 노출 목록(판매용)
+    public ItemListAsset bagItemList; // 상점 노출 목록(판매용)
+
+
     // 내부 상수: 이번 단계는 4×2 고정(8칸)
     [SerializeField] private int shopVisibleCount = 5; // 상점용
     [SerializeField] private int bagVisibleCount = 8; // 가방용
-
-    [SerializeField] private UiToast uiToast;
 
     [SerializeField] private TMP_Text WalletText; // ModalOverlay 내 지갑 텍스트
     [SerializeField] private TMP_Text WalletTextbag; // BagTitle 내 지갑 텍스트
@@ -55,9 +57,9 @@ public class ShopBagController : MonoBehaviour
         if (bagCardPrefab == null) Debug.LogWarning("ShopBagController: bagCardPrefab 참조가 비었습니다.");
 
         if (itemModal == null) Debug.LogWarning("ShopBagController: itemModal 참조가 비었습니다.");
-
+        if (shopItems.Count == 0 && shopItemList != null) shopItems = ListToRuntime(shopItemList);
+        if (bagItems.Count == 0 && bagItemList != null) bagItems = ListToRuntime(bagItemList);
         if (shopItems.Count == 0) shopItems = CreateDummy(20);
-
         if (bagItems.Count == 0) bagItems = CreateDummy(8);
 
         RefreshCoinsUI();
@@ -65,21 +67,40 @@ public class ShopBagController : MonoBehaviour
         RefreshAll();
     }
 
-
-    private void Toast(string message, bool warn = false)
+    private List<ItemData> ListToRuntime(ItemListAsset listAsset)
     {
-        if (warn) Debug.LogWarning("[Toast]message");
-        else
-            Debug.Log("[Toast] {message}");
-    uiToast?.Show(message);
-}
- 
+        var list = new List<ItemData>();
+        if (listAsset == null || listAsset.entries == null) return list;
+        foreach (var e in listAsset.entries)
+        {
+            if (e == null || e.item == null) continue;
+            var r = e.item.ToRuntime(); if (e.overridePrice >= 0) r.price = e.overridePrice; list.Add(r);
+        }
+        return list;
+    }
+
     public void OnClickShopItem(ItemData item)
     {
         ShowModal(item, ItemSource.Shop);
 
     }
 
+    private List<ItemData> CreateDummy(int count)
+    {
+        var list = new List<ItemData>(count);
+        for (int i = 0; i < count; i++)
+        {
+            list.Add(new ItemData
+            {
+                id = "dummy_i+1",
+                name = "dummy{i+1}",
+                price = Random.Range(50, 500) * 10,
+                icon = null,
+                description = "테스트용 더미 아이템"
+            });
+        }
+        return list;
+    }
     public void OnClickBagItem(ItemData item)
     {
         ShowModal(item, ItemSource.Bag);
@@ -101,9 +122,11 @@ public class ShopBagController : MonoBehaviour
 
 
     private void RefreshCoinsUI()
-    { string formatted = $"{playerCoins:N0}Coins"; 
+    {
+        string formatted = $"{playerCoins:N0}Coins";
         if (WalletText != null) WalletText.text = formatted;
-        if (WalletTextbag != null) WalletTextbag.text = formatted; }
+        if (WalletTextbag != null) WalletTextbag.text = formatted;
+    }
 
     public void RefreshAll()
     {
@@ -241,7 +264,7 @@ public class ShopBagController : MonoBehaviour
 
         if (playerCoins < total)
         {
-            Toast("Not Eneufdsafudsf.", warn: true);
+            Debug.LogWarning($"[Purchase.Fail] need={total:N0}, have={playerCoins:N0}");
 
             return false;
         }
@@ -250,7 +273,7 @@ public class ShopBagController : MonoBehaviour
         for (int i = 0; i < qty; i++)
             bagItems.Add(CloneItem(item));
         Debug.Log($"[Purchase] {item.name} x{qty}, cost={total:N0}, coins={playerCoins:N0}");
-        Toast($"[Purchase] {item.name} x{qty}, cost={total:N0}, coins={playerCoins:N0}");
+
 
         return true;
     }
@@ -259,7 +282,7 @@ public class ShopBagController : MonoBehaviour
         int owned = GetOwnedCount(item);
         if (owned < qty)
         {
-            Toast("보유 수량이 부족합니다.");
+
             return false;
         }
 
@@ -279,7 +302,6 @@ public class ShopBagController : MonoBehaviour
 
         playerCoins += (int)total;
         Debug.Log($"[Sell] {item.name} x{qty}, gain={total:N0}, coins={playerCoins:N0}");
-        Toast($"Sold {item.name} x{qty}, gain={total:N0}, coins={playerCoins:N0}");
         return true;
     }
 
@@ -291,21 +313,5 @@ public class ShopBagController : MonoBehaviour
             Destroy(parent.GetChild(i).gameObject);
     }
 
-    // 선택: 테스트용 더미 데이터
-    private List<ItemData> CreateDummy(int count)
-    {
-        var list = new List<ItemData>(count); for (int i = 0; i < count; i++)
-        {
-            list.Add(new ItemData
-            {
-                id = "dummy_i",
-                name = "dummy" + (i + 1),
-                price = Random.Range(50, 500) * 10,
-                icon = null, // 아이콘 없으면 null로 테스트
-                description = "테스트용 더미 아이템"
 
-            });
-        }
-        return list;
-    }
 }
